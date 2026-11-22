@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArchBoard · 技术架构工作台</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- 侧边栏 -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">AB</div>
+      <div class="brand-name">ArchBoard<small>技术架构工作台</small></div>
+    </div>
+    <nav class="nav" id="nav">
+      <a class="nav-item active" href="#today"><span class="ico">◎</span>今日概览</a>
+      <a class="nav-item" href="#intel"><span class="ico">◈</span>每日情报</a>
+      <a class="nav-item" href="#knowledge"><span class="ico">▦</span>知识卡片</a>
+      <a class="nav-item" href="#kit"><span class="ico">◇</span>决策工具箱</a>
+      <a class="nav-item" href="#resources"><span class="ico">↗</span>成长资源</a>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="evo-badge"><span class="dot"></span><span id="evoDays">已进化 1 天</span></div>
+      <div class="evo-sub" id="startupDate"></div>
+    </div>
+  </aside>
+
+  <!-- 主内容 -->
+  <main class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="菜单">☰</button>
+      <div class="topbar-date" id="topDate"></div>
+      <div class="topbar-right">
+        <button class="theme-btn" id="themeBtn" title="切换主题">◐</button>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- 今日概览 -->
+      <section id="today" class="page active">
+        <div class="hero">
+          <div class="hero-glow"></div>
+          <div class="hero-inner">
+            <div class="hero-label">TODAY'S FOCUS · 今日聚焦</div>
+            <h1 id="greeting">早上好，架构师</h1>
+            <p class="hero-date" id="heroDate"></p>
+            <div class="focus-card">
+              <div class="focus-tag" id="focusTheme">稳定性建设</div>
+              <p class="focus-question" id="focusQuestion"></p>
+              <div class="focus-hint">每天一个问题，帮你保持架构敏感度</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-num" id="statIntel">0</div><div class="stat-label">情报条目</div></div>
+          <div class="stat-card"><div class="stat-num" id="statCards">0</div><div class="stat-label">知识卡片</div></div>
+          <div class="stat-card"><div class="stat-num" id="statDays">1</div><div class="stat-label">进化天数</div></div>
+          <div class="stat-card"><div class="stat-num" id="statCheck">0</div><div class="stat-label">今日待办清单</div></div>
+        </div>
+
+        <div class="section-head">
+          <div><h2>今日知识卡</h2><p>每天自动抽取一张，日积月累</p></div>
+          <button class="ghost-btn" id="shuffleCard">换一张 ↻</button>
+        </div>
+        <div id="dailyCardSlot"></div>
+
+        <div class="section-head">
+          <div><h2>最新情报</h2><p>自动化任务每日更新</p></div>
+          <a class="ghost-btn" href="#intel">查看全部 →</a>
+        </div>
+        <div class="intel-list" id="homeIntel"></div>
+      </section>
+
+      <!-- 每日情报 -->
+      <section id="intel" class="page">
+        <div class="page-head">
+          <h1>每日情报</h1>
+          <p>技术架构领域的动态、趋势与实践洞察，每天自动追加。按时间倒序排列。</p>
+        </div>
+        <div class="filter-bar" id="intelFilters"></div>
+        <div class="intel-list" id="allIntel"></div>
+      </section>
+
+      <!-- 知识卡片 -->
+      <section id="knowledge" class="page">
+        <div class="page-head">
+          <h1>知识卡片</h1>
+          <p>架构师核心知识库。按分类浏览，所有卡片本地可用。</p>
+        </div>
+        <div class="filter-bar" id="knowledgeFilters"></div>
+        <div class="card-grid" id="knowledgeGrid"></div>
+      </section>
+
+      <!-- 决策工具箱 -->
+      <section id="kit" class="page">
+        <div class="page-head">
+          <h1>决策工具箱</h1>
+          <p>把经验固化成清单和模板，勾选状态自动保存在本机。</p>
+        </div>
+        <div class="kit-tabs" id="kitTabs">
+          <button class="kit-tab active" data-kit="review">架构评审清单</button>
+          <button class="kit-tab" data-kit="launch">上线检查清单</button>
+          <button class="kit-tab" data-kit="selection">技术选型评估</button>
+          <button class="kit-tab" data-kit="adr">ADR 决策模板</button>
+        </div>
+        <div id="kitPanel"></div>
+      </section>
+
+      <!-- 成长资源 -->
+      <section id="resources" class="page">
+        <div class="page-head">
+          <h1>成长资源</h1>
+          <p>持续精进的优质资源入口。链接在本机浏览器中打开。</p>
+        </div>
+        <div id="resourceGroups"></div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="data/knowledge.js"></script>
+<script src="data/daily.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

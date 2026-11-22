@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mac 新手必备 Tips</title>
+<style>
+  :root {
+    --bg: #f5f5f7;
+    --card: #ffffff;
+    --ink: #1d1d1f;
+    --sub: #6e6e73;
+    --accent: #0071e3;
+    --accent-soft: #e8f2ff;
+    --line: #e5e5ea;
+    --kbd-bg: #f0f0f2;
+    --kbd-line: #d2d2d7;
+    --shadow: 0 6px 24px rgba(0,0,0,0.06);
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px 80px; }
+
+  header {
+    padding: 56px 0 28px;
+    text-align: center;
+  }
+  .badge-top {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 5px 14px;
+    border-radius: 999px;
+    margin-bottom: 18px;
+  }
+  header h1 { font-size: 40px; margin: 0 0 10px; letter-spacing: -1px; }
+  header p { color: var(--sub); font-size: 16px; margin: 0; }
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 8px 0 36px;
+  }
+  nav a {
+    font-size: 13px;
+    color: var(--sub);
+    text-decoration: none;
+    padding: 6px 13px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--card);
+    transition: all .15s ease;
+  }
+  nav a:hover { color: var(--accent); border-color: var(--accent); }
+
+  section {
+    background: var(--card);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    padding: 26px 28px;
+    margin-bottom: 20px;
+  }
+  .sec-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .num {
+    flex: none;
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sec-head h2 { font-size: 21px; margin: 0; letter-spacing: -.3px; }
+  .sec-head .tip-label { margin-left: auto; font-size: 12px; color: var(--sub); }
+
+  p.desc { color: var(--sub); font-size: 14px; margin: 0 0 14px; }
+  ul { margin: 0; padding-left: 20px; }
+  li { margin: 7px 0; }
+  li b { color: var(--ink); }
+
+  kbd {
+    display: inline-block;
+    background: var(--kbd-bg);
+    border: 1px solid var(--kbd-line);
+    border-bottom-width: 2px;
+    border-radius: 6px;
+    padding: 1px 7px;
+    font-family: -apple-system, "SF Pro Text", sans-serif;
+    font-size: 12.5px;
+    color: var(--ink);
+    white-space: nowrap;
+    margin: 0 1px;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+  th { color: var(--sub); font-weight: 600; font-size: 12px; letter-spacing: .5px; }
+  tr:last-child td { border-bottom: none; }
+  td:first-child { width: 46%; }
+  .keycell { white-space: nowrap; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .mini {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .mini h3 { font-size: 14px; margin: 0 0 4px; }
+  .mini p { font-size: 13px; color: var(--sub); margin: 0; }
+
+  .callout {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    color: #0a3b6e;
+    margin-top: 14px;
+  }
+
+  footer { text-align: center; color: var(--sub); font-size: 12px; margin-top: 34px; }
+
+  @media (max-width: 620px) {
+    header h1 { font-size: 30px; }
+    .grid { grid-template-columns: 1fr; }
+    section { padding: 20px; }
+    .sec-head .tip-label { display: none; }
+  }
+  @media print {
+    body { background: #fff; }
+    section { box-shadow: none; border: 1px solid var(--line); break-inside: avoid; }
+    nav { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="badge-top">NEW MAC · 上手手册</div>
+    <h1>Mac 新手必备 Tips</h1>
+    <p>从键盘到触控板，一份能随手查的速查手册</p>
+  </header>
+
+  <nav>
+    <a href="#s1">键盘基础</a>
+    <a href="#s2">快捷键速查</a>
+    <a href="#s3">触控板手势</a>
+    <a href="#s4">聚焦搜索</a>
+    <a href="#s5">访达与文件</a>
+    <a href="#s6">截图与录屏</a>
+    <a href="#s7">窗口与桌面</a>
+    <a href="#s8">新手小贴士</a>
+    <a href="#s9">切换输入法</a>
+    <a href="#s10">AI 编程工具</a>
+  </nav>
+
+  <!-- 1 -->
+  <section id="s1">
+    <div class="sec-head">
+      <div class="num">1</div>
+      <h2>先认识键盘</h2>
+      <span class="tip-label">最重要的一节</span>
+    </div>
+    <p class="desc">从 Windows 过来，最关键的一个变化：Mac 用 <kbd>⌘ Command</kbd> 代替了 <kbd>Ctrl</kbd>。绝大部分"复制粘贴"类操作都按 Command。</p>
+    <div class="grid">
+      <div class="mini">
+        <h3>⌘ Command</h3>
+        <p>核心修饰键，相当于 Windows 的 Ctrl。位置在空格键两侧。</p>
+      </div>
+      <div class="mini">
+        <h3>⌥ Option / Alt</h3>
+        <p>扩展功能键，常用来调出隐藏选项，比如另存为、特殊符号。</p>
+      </div>
+      <div class="mini">
+        <h3>⌃ Control</h3>
+        <p>传统控制键，配合触控板点按相当于"右键"。</p>
+      </div>
+      <div class="mini">
+        <h3>⇧ Shift / ⇪ Caps Lock</h3>
+        <p>大写锁定键轻按一下可切换中英文输入法（需系统设置里开启）。</p>
+      </div>
+    </div>
+    <div class="callout">小技巧：按住 <kbd>⌥ Option</kbd> 再点菜单栏图标，常能打开隐藏菜单；按住它拖动窗口，可以绕过"吸附"直接自由移动。</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="s2">
+    <div class="sec-head">
+      <div class="num">2</div>
+      <h2>高频快捷键速查</h2>
+      <span class="tip-label">收藏这一张表</span>
+    </div>
+    <table>
+      <thead><tr><th>功能</th><th>快捷键</th></tr></thead>
+      <tbody>
+        <tr><td>复制 / 粘贴 / 剪切</td><td class="keycell"><kbd>⌘C</kbd> <kbd>⌘V</kbd> <kbd>⌘X</kbd></td></tr>
+        <tr><td>全选 / 撤销 / 重做</td><td class="keycell"><kbd>⌘A</kbd> <kbd>⌘Z</kbd> <kbd>⌘⇧Z</kbd></td></tr>
+        <tr><td>保存 / 关闭窗口 / 退出应用</td><td class="keycell"><kbd>⌘S</kbd> <kbd>⌘W</kbd> <kbd>⌘Q</kbd></td></tr>
+        <tr><td>切换应用</td><td class="keycell"><kbd>⌘Tab</kbd></td></tr>
+        <tr><td> spotlight 聚焦搜索</td><td class="keycell"><kbd>⌘空格</kbd></td></tr>
+        <tr><td>打开系统设置</td><td class="keycell"><kbd>⌘,</kbd></td></tr>
+        <tr><td>隐藏当前应用窗口</td><td class="keycell"><kbd>⌘H</kbd></td></tr>
+        <tr><td>前往指定文件夹</td><td class="keycell"><kbd>⌘⇧G</kbd></td></tr>
+        <tr><td>强制退出卡住的应用</td><td class="keycell"><kbd>⌘⌥Esc</kbd></td></tr>
+      </tbody>
+    </table>
+    <div class="callout">注意：<kbd>⌘W</kbd> 只是关窗口，不会退出程序；想彻底退出用 <kbd>⌘Q</kbd>。卡死时用 <kbd>⌘⌥Esc</kbd> 调出强制退出窗口。</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="s3">
+    <div class="sec-head">
+      <div class="num">3</div>
+      <h2>触控板手势</h2>
+      <span class="tip-label">Mac 的灵魂</span>
+    </div>
+    <ul>
+      <li><b>单指</b>移动光标；<b>轻点</b>一下等于单击。</li>
+      <li><b>双指上下滑动</b>滚动页面；<b>双指轻点</b> = 鼠标右键（也可双指按触控板下角）。</li>
+      <li><b>双指捏合 / 张开</b>缩放页面或图片。</li>
+      <li><b>三指左右滑</b>切换已打开的应用；<b>三指上下滑</b>在应用窗口和桌面间移动。</li>
+      <li><b>四指上滑</b>打开调度中心，看到所有窗口；<b>四指左右滑</b>切换不同桌面。</li>
+      <li><b>四指张开</b>显示桌面（Launchpad 用拇指+三指捏合）。</li>
+    </ul>
+    <div class="callout">去「系统设置 → 触控板」按自己的习惯调灵敏度，还能预览每个手势的效果。</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="s4">
+    <div class="sec-head">
+      <div class="num">4</div>
+      <h2>聚焦搜索 Spotlight</h2>
+      <span class="tip-label">效率神器</span>
+    </div>
+    <p class="desc">按 <kbd>⌘空格</kbd> 呼出搜索框，它不只是找文件：</p>
+    <ul>
+      <li>输入应用名直接打开应用，比如"微信""浏览器"。</li>
+      <li>输入文件名，快速定位全盘文档。</li>
+      <li>直接算算术：<code>25*8</code>、查汇率、换算单位、查单词翻译。</li>
+      <li>用方向键选中结果后按 <kbd>Return</kbd> 打开。</li>
+    </ul>
+  </section>
+
+  <!-- 5 -->
+  <section id="s5">
+    <div class="sec-head">
+      <div class="num">5</div>
+      <h2>访达 Finder 与文件管理</h2>
+      <span class="tip-label">像"资源管理器"</span>
+    </div>
+    <ul>
+      <li><b>空格键快速预览：</b>选中文件按空格，不打开也能看内容、看图、看 PDF，再按空格关闭。</li>
+      <li><b>前往文件夹：</b><kbd>⌘⇧G</kbd>，粘贴路径直接跳转。</li>
+      <li><b>侧边栏收藏：</b>把常用文件夹拖到左侧，一键到达。</li>
+      <li><b>文件标签：</b>右键文件可加颜色标签，按颜色快速分类筛选。</li>
+      <li><b>新建文件夹：</b><kbd>⌘⇧N</kbd>；<b>重命名：</b>选中后按 <kbd>Return</kbd>。</li>
+      <li><b>显示隐藏文件：</b><kbd>⌘⇧.</kbd>（再按一次隐藏）。</li>
+    </ul>
+  </section>
+
+  <!-- 6 -->
+  <section id="s6">
+    <div class="sec-head">
+      <div class="num">6</div>
+      <h2>截图与录屏</h2>
+      <span class="tip-label">不用装软件</span>
+    </div>
+    <table>
+      <thead><tr><th>功能</th><th>快捷键</th></tr></thead>
+      <tbody>
+        <tr><td>截取整个屏幕</td><td class="keycell"><kbd>⌘⇧3</kbd></td></tr>
+        <tr><td>区域截图（可自选范围）</td><td class="keycell"><kbd>⌘⇧4</kbd></td></tr>
+        <tr><td>窗口截图（自动不带阴影边框可选）</td><td class="keycell"><kbd>⌘⇧4</kbd> 再按 <kbd>空格</kbd></td></tr>
+        <tr><td>打开截图工具栏 / 录屏</td><td class="keycell"><kbd>⌘⇧5</kbd></td></tr>
+      </tbody>
+    </table>
+    <div class="callout">截图默认存到桌面；在 <kbd>⌘⇧5</kbd> 的「选项」里可改保存位置、设置录屏是否带声音。按住 <kbd>⌃ Control</kbd> 组合键可让截图直接进剪贴板，方便粘贴到聊天窗口。</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="s7">
+    <div class="sec-head">
+      <div class="num">7</div>
+      <h2>窗口与桌面管理</h2>
+      <span class="tip-label">多任务不慌</span>
+    </div>
+    <ul>
+      <li><b>分屏：</b>按住窗口左上角绿色按钮，或把窗口拖到屏幕左/右边缘，即可半屏并排。</li>
+      <li><b>调度中心：</b><kbd>F3</kbd> 或四指上滑，一览所有窗口。</li>
+      <li><b>多个桌面：</b>在调度中心点右上角「+」新建桌面，可把不同任务分到不同桌面，四指左右滑动切换。</li>
+      <li><b>台前调度 Stage Manager：</b>系统设置 → 控制中心里开启，自动整理窗口、减少混乱。</li>
+      <li><b>最小化：</b><kbd>⌘M</kbd>；恢复最小化的窗口可从程序坞 Dock 点击应用。</li>
+    </ul>
+  </section>
+
+  <!-- 8 -->
+  <section id="s8">
+    <div class="sec-head">
+      <div class="num">8</div>
+      <h2>给新手的额外提示</h2>
+      <span class="tip-label">少踩坑</span>
+    </div>
+    <div class="grid">
+      <div class="mini">
+        <h3>软件装哪里？</h3>
+        <p>从 App Store 下载，或官网下载 .dmg / .pkg 安装包。谨慎安装来路不明的软件。</p>
+      </div>
+      <div class="mini">
+        <h3>怎么卸载 App？</h3>
+        <p>大部分 App 直接拖到废纸篓即可；从 App Store 装的用 Launchpad 长按图标删除。</p>
+      </div>
+      <div class="mini">
+        <h3>找到"控制面板"</h3>
+        <p>Mac 叫「系统设置」，在 Dock 齿轮图标或 苹果菜单 → 系统设置里打开。</p>
+      </div>
+      <div class="mini">
+        <h3>电池保养</h3>
+        <p>开启「优化电池充电」；长期插电办公建议偶尔用到 20%~80% 之间循环。</p>
+      </div>
+      <div class="mini">
+        <h3>切换输入法</h3>
+        <p>用 <kbd>⌃空格</kbd> 切换输入法；拼音状态下直接按 <kbd>⇧ Shift</kbd> 切中英文。详见第 9 节。</p>
+      </div>
+      <div class="mini">
+        <h3>文件备份</h3>
+        <p>重要文件开启 iCloud 云盘或定期用「时间机器 Time Machine」外接硬盘备份。</p>
+      </div>
+    </div>
+    <div class="callout">官方"使用手册"最权威：打开「帮助 → Mac 使用手册」，或访问 support.apple.com，遇到具体问题随时查。</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="s9">
+    <div class="sec-head">
+      <div class="num">9</div>
+      <h2>切换输入法（详细版）</h2>
+      <span class="tip-label">每天都要用</span>
+    </div>
+    <p class="desc">输入中文前，先确认已经添加好中文输入法：苹果菜单 → <b>系统设置</b> → <b>键盘</b> → <b>文本输入 → 编辑</b> → 点 <b>+</b> 添加「简体中文 - 拼音」。</p>
+
+    <table>
+      <thead><tr><th>想做什么</th><th>怎么操作</th></tr></thead>
+      <tbody>
+        <tr><td>中英文来回切（最常用）</td><td class="keycell"><kbd>⌃空格</kbd></td></tr>
+        <tr><td>中文拼音内部切中 / 英</td><td class="keycell">直接按 <kbd>⇧ Shift</kbd></td></tr>
+        <tr><td>在多个输入法之间逐个切换</td><td class="keycell"><kbd>⌃⌥空格</kbd></td></tr>
+        <tr><td>用大小写键切换</td><td class="keycell"><kbd>⇪ Caps Lock</kbd>（需先在设置里开启）</td></tr>
+        <tr><td>鼠标点选</td><td class="keycell">点菜单栏右上角的输入法图标（"中"/"英"/国旗）</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout"><b>避坑提醒：</b>从 Windows 过来常按的 <kbd>⌘空格</kbd>，在 Mac 上默认是「聚焦搜索」，不是切输入法。记住 Mac 切输入法用 <kbd>⌃空格</kbd>（Control + 空格）。</div>
+
+    <p class="desc" style="margin-top:16px;"><b>开启 Caps Lock 切换：</b>系统设置 → 键盘 → 文本输入 → 编辑 → 打开「使用大写锁定键在大写和小写 / 拉丁与非拉丁输入源之间切换」。开启后按一下大写键即可中英互切。</p>
+    <p class="desc"><b>让每个 App 记住自己的输入法：</b>在同一页勾选「自动切换到文稿的输入源」，这样切到不同应用会自动用回该应用上次用的语言，省去频繁手动切换。</p>
+  </section>
+
+  <!-- 10 -->
+  <section id="s10">
+    <div class="sec-head">
+      <div class="num">10</div>
+      <h2>Mac 上的 AI 编程工具（Vibe Coding）</h2>
+      <span class="tip-label">2026 年底版</span>
+    </div>
+    <p class="desc">"Vibe coding" 就是用自然语言描述需求、让 AI 写代码的开发方式。下面按你的角色（技术架构负责人）排序，而不是按榜单排名——工具迭代很快，结论以 2026 年 11 月实测为准。</p>
+    <table>
+      <thead><tr><th>工具</th><th>定位 / 适合场景</th></tr></thead>
+      <tbody>
+        <tr><td><b>Qoder</b><br><span style="color:var(--sub);font-size:12px">阿里 · 主力推荐</span></td><td>智能体自主开发工作台，不是"中国版 Cursor"。<b>Repo Wiki</b> 自动扫全仓生成架构文档/知识图谱，适合接手祖传代码；<b>Quest 模式</b>先出 Spec 方案、你确认再动手；交付时自动生成 Dockerfile / CI / Helm。强项是大型后端、存量系统重构。短板：前端/多模态一般，学习成本偏高。</td></tr>
+        <tr><td><b>CodeBuddy</b><br><span style="color:var(--sub);font-size:12px">腾讯 · 生态协同</span></td><td>与你正在用的 WorkBuddy 同源，MCP 生态是主打，配置零门槛；CodeBuddy Code 兼容 Claude Code 的 Skills，积累可复用；免费起步，Pro 约 $12/月。短板：复杂多文件协同偏弱，成熟度仍在提升。</td></tr>
+        <tr><td><b>Claude Code</b><br><span style="color:var(--sub);font-size:12px">终端 · 能力上限</span></td><td>命令行 Agent，Plan Mode 先规划再落地，跨文件重构成功率最高（SWE-bench 领先）。适合大型重构、架构级任务。短板：终端形态有门槛、成本最高（约 $100-200/月），无免费档。</td></tr>
+        <tr><td><b>TRAE</b><br><span style="color:var(--sub);font-size:12px">字节 · 轻量备选</span></td><td>开箱即用、国内直连、内置国产模型、中文理解好、基础版免费。适合快速原型、前端/小程序、零预算起步。短板：超大工程和复杂后端能力有限。</td></tr>
+      </tbody>
+    </table>
+    <div class="callout"><b>给你的使用顺序：</b>日常先 CodeBuddy（省心、和现有工具链合得来）→ 接手大型存量项目或做架构重构时用 Qoder → 需要啃最硬的骨头再上 Claude Code → 做快速前端原型用 TRAE。</div>
+    <p class="desc" style="margin-top:16px;"><b>两个避坑提醒：</b>① 看到推荐 <b>Windsurf</b> 的攻略是过时的——它 2025 年被 Cognition 收购，2026 年 6 月已改名 Devin Desktop。② <b>Cursor</b> 从 2025 年 6 月起改为 credit 计费，"Auto 无限"实际是 fair-use，重度使用会跑光额度。</p>
+    <p class="desc" style="margin-top:10px;"><b>一句实话：</b>Vibe coding 加速好的判断，但不产生好的判断。真正值钱的是任务拆解和架构设计——这部分工具替不了你。</p>
+  </section>
+
+  <footer>整理于 2026 · 建议收藏，遇到记不住的操作随时回来翻一翻</footer>
+
+</div>
+</body>
+</html>

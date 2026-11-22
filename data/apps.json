@@ -1,0 +1,38 @@
+{
+  "schema": "archhub/app-registry/v1",
+  "updated": "2026-11-22",
+  "apps": [
+    {
+      "id": "mac-tips",
+      "name": "Mac 新手上手 Tips",
+      "description": "从键盘、触控板到 AI 编程工具的 Mac 上手手册",
+      "category": "指南",
+      "tags": ["mac", "入门", "工具"],
+      "type": "static-site",
+      "status": "active",
+      "icon": "⌘",
+      "accent": "#0071e3",
+      "entry": "./apps/mac-tips/index.html",
+      "source": "/Users/hq/WorkBuddy/2026-11-20-21-51-58/Mac新手Tips.html",
+      "created": "2026-11-20",
+      "updated": "2026-11-21",
+      "ingest": true
+    },
+    {
+      "id": "archboard",
+      "name": "技术架构工作台",
+      "description": "面向技术架构负责人的每日情报、知识卡片与决策工具箱",
+      "category": "工作台",
+      "tags": ["架构", "工作台", "每日进化"],
+      "type": "static-site",
+      "status": "active",
+      "icon": "AB",
+      "accent": "#4f8cff",
+      "entry": "./apps/archboard/index.html",
+      "source": "/Users/hq/WorkBuddy/2026-11-20-21-51-58/archboard",
+      "created": "2026-11-21",
+      "updated": "2026-11-21",
+      "ingest": true
+    }
+  ]
+}
