@@ -11,13 +11,20 @@
   let CFG = loadConfig();        // Agent 配置
   let abortCtrl = null;          // 当前请求的 AbortController
 
-  // 快捷建议
-  const SUGGESTIONS = [
+  // 快捷建议（按模式切换：本地引擎偏检索，AI 模式展示通用能力）
+  const LOCAL_SUGGESTIONS = [
     { ico: "▦", title: "看看有哪些应用", sub: "列出你所有已登记的应用", q: "有哪些应用" },
     { ico: "✦", title: "问一个架构问题", sub: "例如：CAP 定理是什么", q: "CAP 定理是什么" },
     { ico: "⌕", title: "搜索知识库", sub: "例如：搜一下熔断", q: "搜一下熔断" },
     { ico: "◷", title: "最近有什么新情报", sub: "查看最新架构动态", q: "最近有什么新情报" }
   ];
+  const AI_SUGGESTIONS = [
+    { ico: "✦", title: "问任何问题", sub: "通用知识、架构、技术都能答", q: "帮我讲讲领域驱动设计的核心思想" },
+    { ico: "✎", title: "帮我写点东西", sub: "方案、文档、邮件、代码", q: "帮我写一份技术选型方案的大纲" },
+    { ico: "⌕", title: "查我的知识库", sub: "结合你的沉淀回答", q: "我的知识库里关于稳定性有哪些内容" },
+    { ico: "▦", title: "看看有哪些应用", sub: "列出你所有已登记的应用", q: "有哪些应用" }
+  ];
+  function suggestions() { return aiEnabled() ? AI_SUGGESTIONS : LOCAL_SUGGESTIONS; }
 
   // ---------- Agent 配置（BYOK） ----------
   function loadConfig() {
@@ -53,6 +60,8 @@
       const stop = $("#stopBtn");
       if (stop) stop.style.display = "none";
     }
+    // 模式切换后，若正停留在欢迎页，同步刷新文案与快捷建议
+    if ($("#welcome")) showWelcome();
   }
 
   // ---------- 设置面板 ----------
@@ -150,7 +159,7 @@
         id: e.id, title: e.title, content: e.content, meta: e
       })));
       $("#railKB").textContent = KB.entries.length;
-      renderSuggestions();
+      if ($("#welcome")) showWelcome(); else renderSuggestions();
       loadSessions();
     } catch (e) {
       console.error(e);
@@ -161,7 +170,7 @@
   function renderSuggestions() {
     const grid = $("#suggestGrid");
     if (!grid) return;
-    grid.innerHTML = SUGGESTIONS.map(s => `
+    grid.innerHTML = suggestions().map(s => `
       <div class="suggest" data-q="${escapeHtml(s.q)}">
         <div class="s-ico">${s.ico}</div>
         <div><b>${s.title}</b><span>${s.sub}</span></div>
@@ -201,10 +210,13 @@
   }
   function showWelcome() { $("#messages").innerHTML = welcomeHTML(); renderSuggestions(); }
   function welcomeHTML() {
+    const ai = aiEnabled();
     return `<div class="welcome" id="welcome">
       <div class="welcome-orb">✦</div>
       <h1>你好，我是 ArchHub</h1>
-      <p>你的应用与知识助手。直接告诉我你想做什么——用大白话就行。</p>
+      <p>${ai
+        ? "我是你的 AI 助手——什么问题都能问，写作、分析、代码也行，需要时会自动查你的应用和知识库。"
+        : "我能查应用、搜知识、回答问题。<b>想要更自由的对话？点右上角 ⚙ 接入真实 AI。</b>"}</p>
       <div class="suggest-grid" id="suggestGrid"></div>
     </div>`;
   }
@@ -311,9 +323,11 @@
   }
   function qaReply(q) {
     const results = SearchEngine.search(INDEX, q, 5);
-    if (!results.length) {
-      return `<span class="lead">我在知识库里没找到关于「${escapeHtml(q)}」的内容。</span><br>
-        <span class="muted">换个说法试试？或者用「有哪些应用」看看我能访问什么。</span>`;
+    // 中文单字分词会让无关问题也有 5%~9% 的虚高得分；低于门槛视为没找到，
+    // 避免把牛头不对马嘴的内容硬当答案（真实命中通常在 14% 以上）。
+    if (!results.length || results[0].score < 0.10) {
+      return `<span class="lead">我在本地知识库里没找到关于「${escapeHtml(q)}」的相关内容。</span><br>
+        <span class="muted">本地引擎只能检索已有沉淀。想让 AI 直接用自己的知识回答你？点右上角 <b>⚙</b> 开启真实 AI Agent。</span>`;
     }
     const top = results[0];
     let answer = `根据知识库，关于「${escapeHtml(q)}」最相关的内容是：<br><br>`;
