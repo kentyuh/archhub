@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArchHub · 我的应用与知识中枢</title>
+<link rel="stylesheet" href="assets/dashboard.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark">AH</div>
+      <div class="brand-name">ArchHub<small>应用与知识中枢</small></div>
+    </div>
+    <nav class="nav" id="nav">
+      <a class="nav-item active" data-page="apps"><span class="ico">▦</span>应用目录</a>
+      <a class="nav-item" data-page="knowledge"><span class="ico">◇</span>知识库</a>
+      <a class="nav-item" data-page="ask"><span class="ico">✦</span>智能问答</a>
+    </nav>
+    <div class="sidebar-foot">
+      <div class="evo-badge"><span class="dot"></span><span id="statApps">0 个应用</span></div>
+      <div class="evo-sub"><span id="statKB">0</span> 条知识 · <span id="statUpdated">—</span></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn">☰</button>
+      <div class="topbar-title" id="topTitle">应用目录</div>
+      <div class="topbar-right"><span class="chip">本地知识库 · 离线可用</span></div>
+    </header>
+
+    <div class="content">
+      <!-- 应用目录 -->
+      <section class="page active" id="page-apps">
+        <div class="hero">
+          <div class="hero-glow"></div>
+          <div class="hero-inner">
+            <div class="hero-label">MY DIGITAL ASSETS</div>
+            <h1>你的应用与知识，在一个地方</h1>
+            <p>所有生成的网页、应用、系统都登记在这里；产出内容自动汇入知识库，随时可检索、可问答。</p>
+            <div class="hero-stats">
+              <div><b id="heroApps">0</b><span>个应用</span></div>
+              <div><b id="heroKB">0</b><span>条知识</span></div>
+              <div><b id="heroTags">0</b><span>个标签</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="section-head"><h2>全部应用</h2><span class="hint">点击卡片打开应用</span></div>
+        <div class="app-grid" id="appGrid"></div>
+      </section>
+
+      <!-- 知识库 -->
+      <section class="page" id="page-knowledge">
+        <div class="page-head"><h1>知识库</h1><p>所有应用沉淀的内容。搜索基于本地 TF-IDF 检索，无需联网。</p></div>
+        <div class="search-box">
+          <input id="kbSearch" type="text" placeholder="搜索知识，例如「熔断」「输入法切换」「CAP」…" autocomplete="off">
+          <button id="kbSearchBtn">搜索</button>
+        </div>
+        <div id="kbResults" class="kb-list"></div>
+      </section>
+
+      <!-- 智能问答 -->
+      <section class="page" id="page-ask">
+        <div class="page-head"><h1>智能问答</h1><p>基于知识库的检索增强问答。系统会找出最相关的内容并生成带来源的回答。</p></div>
+        <div class="ask-box">
+          <textarea id="askInput" rows="3" placeholder="问一个关于你应用或架构知识的问题…"></textarea>
+          <button id="askBtn">提问</button>
+        </div>
+        <div class="ask-mode">
+          <label><input type="radio" name="llmMode" value="extractive" checked> 提取式（离线，直接摘录相关片段）</label>
+          <label><input type="radio" name="llmMode" value="llm"> LLM 增强（需配置接口）</label>
+        </div>
+        <div id="askResult" class="ask-result"></div>
+      </section>
+    </div>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="lib/search.js"></script>
+<script src="assets/dashboard.js"></script>
+</body>
+</html>

@@ -3,83 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ArchHub · 我的应用与知识中枢</title>
-<link rel="stylesheet" href="assets/style.css">
+<title>ArchHub Copilot · 你的应用与知识助手</title>
+<link rel="stylesheet" href="assets/chat.css">
 </head>
 <body>
-<div class="app">
-  <aside class="sidebar" id="sidebar">
-    <div class="brand">
-      <div class="brand-mark">AH</div>
-      <div class="brand-name">ArchHub<small>应用与知识中枢</small></div>
+<div class="shell">
+  <!-- 左侧会话栏 -->
+  <aside class="rail" id="rail">
+    <div class="rail-head">
+      <div class="brand"><div class="brand-mark">AH</div><div><b>ArchHub</b><span>Copilot</span></div></div>
+      <button class="rail-close" id="railClose">×</button>
     </div>
-    <nav class="nav" id="nav">
-      <a class="nav-item active" data-page="apps"><span class="ico">▦</span>应用目录</a>
-      <a class="nav-item" data-page="knowledge"><span class="ico">◇</span>知识库</a>
-      <a class="nav-item" data-page="ask"><span class="ico">✦</span>智能问答</a>
-    </nav>
-    <div class="sidebar-foot">
-      <div class="evo-badge"><span class="dot"></span><span id="statApps">0 个应用</span></div>
-      <div class="evo-sub"><span id="statKB">0</span> 条知识 · <span id="statUpdated">—</span></div>
+    <button class="new-chat" id="newChat"><span class="plus">＋</span> 新对话</button>
+    <div class="rail-label">对话记录</div>
+    <div class="history" id="history"></div>
+    <div class="rail-foot">
+      <div class="status"><span class="dot"></span> 知识库在线 · <span id="railKB">0</span> 条</div>
+      <div class="rail-actions">
+        <button id="openDashboard" title="打开传统视图">⊞ 应用目录</button>
+      </div>
     </div>
   </aside>
 
-  <main class="main">
-    <header class="topbar">
+  <!-- 主对话区 -->
+  <main class="chat">
+    <header class="chat-head">
       <button class="menu-btn" id="menuBtn">☰</button>
-      <div class="topbar-title" id="topTitle">应用目录</div>
-      <div class="topbar-right"><span class="chip">本地知识库 · 离线可用</span></div>
+      <div class="head-title"><span class="head-avatar">✦</span><div><b>ArchHub Copilot</b><span>用自然语言查询你的应用与知识</span></div></div>
+      <div class="head-right">
+        <span class="badge">本地运行 · 隐私安全</span>
+        <button class="theme-btn" id="themeBtn" title="切换主题">◐</button>
+      </div>
     </header>
 
-    <div class="content">
-      <!-- 应用目录 -->
-      <section class="page active" id="page-apps">
-        <div class="hero">
-          <div class="hero-glow"></div>
-          <div class="hero-inner">
-            <div class="hero-label">MY DIGITAL ASSETS</div>
-            <h1>你的应用与知识，在一个地方</h1>
-            <p>所有生成的网页、应用、系统都登记在这里；产出内容自动汇入知识库，随时可检索、可问答。</p>
-            <div class="hero-stats">
-              <div><b id="heroApps">0</b><span>个应用</span></div>
-              <div><b id="heroKB">0</b><span>条知识</span></div>
-              <div><b id="heroTags">0</b><span>个标签</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="section-head"><h2>全部应用</h2><span class="hint">点击卡片打开应用</span></div>
-        <div class="app-grid" id="appGrid"></div>
-      </section>
+    <div class="messages" id="messages">
+      <!-- 欢迎屏 -->
+      <div class="welcome" id="welcome">
+        <div class="welcome-orb">✦</div>
+        <h1>你好，我是 ArchHub</h1>
+        <p>你的应用与知识助手。直接告诉我你想做什么——用大白话就行。</p>
+        <div class="suggest-grid" id="suggestGrid"></div>
+      </div>
+    </div>
 
-      <!-- 知识库 -->
-      <section class="page" id="page-knowledge">
-        <div class="page-head"><h1>知识库</h1><p>所有应用沉淀的内容。搜索基于本地 TF-IDF 检索，无需联网。</p></div>
-        <div class="search-box">
-          <input id="kbSearch" type="text" placeholder="搜索知识，例如「熔断」「输入法切换」「CAP」…" autocomplete="off">
-          <button id="kbSearchBtn">搜索</button>
-        </div>
-        <div id="kbResults" class="kb-list"></div>
-      </section>
-
-      <!-- 智能问答 -->
-      <section class="page" id="page-ask">
-        <div class="page-head"><h1>智能问答</h1><p>基于知识库的检索增强问答。系统会找出最相关的内容并生成带来源的回答。</p></div>
-        <div class="ask-box">
-          <textarea id="askInput" rows="3" placeholder="问一个关于你应用或架构知识的问题…"></textarea>
-          <button id="askBtn">提问</button>
-        </div>
-        <div class="ask-mode">
-          <label><input type="radio" name="llmMode" value="extractive" checked> 提取式（离线，直接摘录相关片段）</label>
-          <label><input type="radio" name="llmMode" value="llm"> LLM 增强（需配置接口）</label>
-        </div>
-        <div id="askResult" class="ask-result"></div>
-      </section>
+    <div class="composer-wrap">
+      <div class="composer" id="composer">
+        <textarea id="input" rows="1" placeholder="问我任何事，例如：打开架构工作台 / 搜一下熔断 / 有哪些应用…"></textarea>
+        <button class="send" id="send" title="发送">➤</button>
+      </div>
+      <div class="composer-hint">Enter 发送 · Shift+Enter 换行 · 所有数据仅存于本机</div>
     </div>
   </main>
 </div>
 <div class="toast" id="toast"></div>
 
 <script src="lib/search.js"></script>
-<script src="assets/app.js"></script>
+<script src="lib/intent.js"></script>
+<script src="assets/chat.js"></script>
 </body>
 </html>
