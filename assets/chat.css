@@ -135,3 +135,59 @@ button,textarea{font-family:inherit}
   .suggest-grid{grid-template-columns:1fr}.composer-wrap{padding:0 14px 14px}
   .badge{display:none}
 }
+
+/* ===== 双模：徽标 / 流式回答 ===== */
+.badge.ai{color:var(--accent-2);border-color:rgba(139,108,255,.4);background:rgba(139,108,255,.09)}
+.mode-tag{font-size:9.5px;color:var(--accent-2);border:1px solid rgba(139,108,255,.4);border-radius:4px;padding:1px 5px;vertical-align:middle;margin-left:4px}
+.agent-status{font-size:11.5px;color:var(--amber);margin-bottom:6px}
+.agent-status:empty{display:none}
+.answer.stream{min-height:22px}
+.answer.stream:empty::after{content:"▍";color:var(--accent)}
+.agent-error{color:#ff8080;border-left:2px solid #ff8080;padding-left:10px}
+.answer code{background:var(--panel-2);padding:1px 5px;border-radius:4px;font-size:12.5px}
+.answer .md-li{margin:3px 0 3px 10px}
+.stop{width:30px;height:30px;border-radius:9px;background:var(--panel-2);color:var(--dim);border:1px solid var(--border);cursor:pointer;font-size:11px;flex:none}
+.stop:hover{color:#ff8080;border-color:#ff8080}
+
+/* ===== AI Agent 设置面板（BYOK） ===== */
+.modal-mask{position:fixed;inset:0;background:rgba(4,7,12,.72);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:300;opacity:0;pointer-events:none;transition:.2s}
+.modal-mask.show{opacity:1;pointer-events:auto}
+.modal{width:min(560px,calc(100vw - 32px));max-height:calc(100vh - 40px);overflow-y:auto;background:var(--panel);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);transform:translateY(12px) scale(.98);transition:.2s}
+.modal-mask.show .modal{transform:none}
+.modal-head{padding:20px 22px 16px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.modal-head b{display:block;font-size:16px;margin-bottom:5px}
+.modal-head span{font-size:12px;color:var(--faint)}
+.modal-x{background:none;border:none;color:var(--faint);font-size:24px;line-height:1;cursor:pointer}
+.modal-x:hover{color:var(--text)}
+.modal-body{padding:20px 22px;display:flex;flex-direction:column;gap:16px}
+.ai-toggle{display:flex;align-items:center;gap:12px;background:var(--panel-2);border:1px solid var(--border);border-radius:12px;padding:13px 15px}
+.ai-toggle-text b{display:block;font-size:13px;margin-bottom:3px}
+.ai-toggle-text span{font-size:11.5px;color:var(--faint);line-height:1.5}
+.switch{position:relative;width:38px;height:22px;flex:none}
+.switch input{opacity:0;width:0;height:0}
+.slider{position:absolute;inset:0;background:var(--border);border-radius:999px;cursor:pointer;transition:.2s}
+.slider:before{content:"";position:absolute;width:16px;height:16px;left:3px;top:3px;border-radius:50%;background:#fff;transition:.2s}
+.switch input:checked + .slider{background:var(--accent)}
+.switch input:checked + .slider:before{transform:translateX(16px)}
+.field{display:flex;flex-direction:column;gap:7px;flex:1;min-width:0}
+.field label{font-size:12px;color:var(--dim);font-weight:600}
+.field input,.field select{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:9px;color:var(--text);padding:10px 12px;font-size:13px;outline:none}
+.field input:focus,.field select:focus{border-color:var(--accent)}
+.field-hint{font-size:11px;color:var(--faint);line-height:1.5}
+.field-row{display:flex;gap:14px}
+.test-result{font-size:12px;line-height:1.5}
+.test-result:empty{display:none}
+.test-result.ok{color:var(--green)}
+.test-result.err{color:#ff8080}
+.modal-foot{padding:16px 22px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.foot-spacer{flex:1}
+.btn-ghost,.btn-primary{padding:9px 16px;border-radius:9px;font-size:12.5px;cursor:pointer;transition:.15s}
+.btn-ghost{background:none;border:1px solid var(--border);color:var(--dim)}
+.btn-ghost:hover{color:var(--text);border-color:var(--dim)}
+.btn-ghost.danger:hover{color:#ff8080;border-color:#ff8080}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent-2));border:none;color:#fff;font-weight:600}
+.btn-primary:hover{filter:brightness(1.1)}
+@media(max-width:560px){
+  .field-row{flex-direction:column}
+  .modal-head,.modal-body,.modal-foot{padding-left:16px;padding-right:16px}
+}

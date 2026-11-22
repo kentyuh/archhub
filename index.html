@@ -31,7 +31,8 @@
       <button class="menu-btn" id="menuBtn">☰</button>
       <div class="head-title"><span class="head-avatar">✦</span><div><b>ArchHub Copilot</b><span>用自然语言查询你的应用与知识</span></div></div>
       <div class="head-right">
-        <span class="badge">本地运行 · 隐私安全</span>
+        <span class="badge" id="modeBadge" title="当前回答引擎">本地引擎 · 隐私安全</span>
+        <button class="theme-btn" id="settingsBtn" title="AI Agent 设置">⚙</button>
         <button class="theme-btn" id="themeBtn" title="切换主题">◐</button>
       </div>
     </header>
@@ -49,16 +50,79 @@
     <div class="composer-wrap">
       <div class="composer" id="composer">
         <textarea id="input" rows="1" placeholder="问我任何事，例如：打开架构工作台 / 搜一下熔断 / 有哪些应用…"></textarea>
+        <button class="stop" id="stopBtn" title="停止生成" style="display:none">■</button>
         <button class="send" id="send" title="发送">➤</button>
       </div>
       <div class="composer-hint">Enter 发送 · Shift+Enter 换行 · 所有数据仅存于本机</div>
     </div>
   </main>
 </div>
+<!-- AI Agent 设置面板（BYOK：密钥只存本机浏览器） -->
+<div class="modal-mask" id="settingsMask">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="AI Agent 设置">
+    <div class="modal-head">
+      <div>
+        <b>接入真实 AI Agent</b>
+        <span>自带密钥（BYOK）· 密钥仅保存在本机浏览器，不会上传</span>
+      </div>
+      <button class="modal-x" id="settingsClose" title="关闭">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="ai-toggle">
+        <label class="switch"><input type="checkbox" id="cfgEnabled"><span class="slider"></span></label>
+        <div class="ai-toggle-text">
+          <b>启用真实 AI Agent</b>
+          <span>开启后由大模型带工具调用回答；关闭则使用内置本地引擎（离线可用）</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="cfgProvider">服务商</label>
+        <select id="cfgProvider">
+          <option value="deepseek">DeepSeek</option>
+          <option value="zhipu">智谱 GLM</option>
+          <option value="qwen">通义千问</option>
+          <option value="moonshot">Moonshot</option>
+          <option value="openai">OpenAI</option>
+          <option value="custom">自定义（OpenAI 兼容）</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="cfgKey">API Key</label>
+        <input type="password" id="cfgKey" autocomplete="off" placeholder="粘贴你的密钥，例如 sk-…">
+        <p class="field-hint">密钥只写入此浏览器的 localStorage，网站代码里不内置任何密钥。</p>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="cfgModel">模型</label>
+          <select id="cfgModel"></select>
+        </div>
+        <div class="field" id="baseUrlField" style="display:none">
+          <label for="cfgBaseUrl">API 地址</label>
+          <input type="text" id="cfgBaseUrl" placeholder="https://api.example.com/v1">
+        </div>
+      </div>
+
+      <div class="test-result" id="testResult"></div>
+    </div>
+
+    <div class="modal-foot">
+      <button class="btn-ghost danger" id="cfgClear">清除密钥</button>
+      <span class="foot-spacer"></span>
+      <button class="btn-ghost" id="cfgTest">测试连接</button>
+      <button class="btn-primary" id="cfgSave">保存并启用</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script src="lib/search.js"></script>
 <script src="lib/intent.js"></script>
+<script src="lib/agent.js"></script>
 <script src="assets/chat.js"></script>
 </body>
 </html>
