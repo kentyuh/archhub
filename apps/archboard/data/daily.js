@@ -12,6 +12,22 @@
  * ============================================================ */
 window.DAILY_INTEL = [
   {
+    date: "2026-11-25",
+    title: "GitHub Rubicon：Agent 时代把 Git 共识缩小到单个引用，单仓库扛住 7200 次推送/秒",
+    source: "GitHub 官方工程博客 · Karthik Raman / Brian Celenza《Inside GitHub’s new Git storage architecture》（2026-11-05）",
+    tag: "实践",
+    summary: "AI Agent 让最忙仓库的请求量 3 个月涨约 4 倍（日均 4400 万到 1.81 亿），写入从偶发突发变成持续速率，而每次 push 又会放大 CI、部署与其他 Agent 的读。GitHub 的新架构 Rubicon 遵循两条原则——最小化协调、存储计算分离：Git 对象不可变且按内容寻址，只有引用更新需要共识；对象放 Azure Blob Storage，引用与包清单放自研 Ref-CAS 复制日志（按单个引用做仲裁 CAS，可达数万 ops/s），压实与 GC 挪到独立后台节点按租约分片。他们先试过单 blob WAL（每秒仅几百次写）和分段 blob（读延迟被最慢分段拖累），才确定这套拆分；内部测试中单仓库支撑 5000 个并发 Agent、7200 次 push/s，且写入上升时延迟曲线保持平坦（均为内测数字，全面推广在次年）。",
+    takeaway: "做分布式设计先划清「哪些状态真正需要排序」：把共识粒度从整仓库缩到单个引用，不可变数据交给对象存储、维护任务移出在线服务路径，读写与维护才能各自扩展——别为提升写吞吐而牺牲数量级更大的读路径。"
+  },
+  {
+    date: "2026-11-25",
+    title: "HPTS’26 演讲：Raft 不是唯一解，leaderless quorum 数据库该被认真做成产品",
+    source: "transactional.blog · HPTS’26 演讲《Please Implement A Quorum Database》文字稿（2026-11-15），Charlie27 博客整理",
+    tag: "观点",
+    summary: "演讲盘点现存 quorum 数据库后指出：Riak 实质已死、Voldemort 少人用，InfluxDB 与 Grafana Mimir 的早期 quorum 版本被重写，Cassandra 几乎是唯一明确在线的例子——业界缺的不是理论而是可抄的实现。leader-based 协议的痛点在 failover：重配置协议约每分钟出现一次延迟尖峰、Raft 选举约每五分钟一次，因此作者主张「可用性其实就是延迟 SLO」，leaderless 没有选举空窗、理应有更平滑的尾延迟。他用 CashDB 分账思想实验逐一检验 ABD、Megastore、EPaxos、QuePaxa、Accord，指出 EPaxos 高竞争下有延迟悬崖且尾延迟无上界；结论是 Accord 的时间戳稳定性加上 escrow 可交换约束，能让这类负载在 leaderless 下成立，Cloudflare 正把 QuePaxa 推向生产（Meerkat）。",
+    takeaway: "复制协议选型别默认 Raft 是唯一解：先按业务语义（只需 register 读写，还是要多 key 事务）和尾延迟目标挑协议，并区分「协议能不能做」与「产品能不能长期维护」——没有选举空窗的 leaderless 方案值得重新评估。"
+  },
+  {
     date: "2026-11-24",
     title: "Uber 把翻译缓存内存砍掉 90%：先降 GC 分配，再让 99% 的冷数据下沉磁盘",
     source: "Uber Engineering · InfoQ 报道（2026-11-20）",
@@ -119,6 +135,7 @@ window.DAILY_INTEL = [
 
 /* 每日聚焦主题库：前端按日期轮换，无需网络 */
 window.DAILY_FOCUS = [
+  { theme: "协调边界", question: "你的系统里，哪些状态真正需要全局排序、哪些可以并行写？如果把共识粒度从「整个仓库」缩小到「单个引用」，把不可变数据交给对象存储、把后台维护移出在线服务路径，读写和维护能否各自独立扩展？" },
   { theme: "缓存与内存", question: "你的缓存里，有多少数据在写入后再也没被读过？当一份数据集里只有不到 1% 的键是热点时，你是继续为全量数据付内存和 GC 成本，还是敢把冷数据下沉到磁盘、用访问历史在刷新后预热？" },
   { theme: "控制平面", question: "你的控制平面故障后靠什么自愈？是精确的一次性操作，还是能容忍短暂不一致、靠定期对账收敛？关键路由数据是落在持久化存储，还是一清除就全员回源的缓存？" },
   { theme: "可靠性", question: "你的关键链路由多少个 95% 可靠的串行步骤组成？把它们相乘之后，端到端可靠度还剩多少？" },

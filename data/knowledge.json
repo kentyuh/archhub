@@ -1,7 +1,29 @@
 {
   "schema": "archhub/knowledge/v1",
-  "updated": "2026-11-24",
+  "updated": "2026-11-25",
   "entries": [
+    {
+      "id": "kb-mwvg2sqwdq",
+      "source": "archboard-daily",
+      "title": "[情报·2026-11-25] HPTS’26 演讲：Raft 不是唯一解，leaderless quorum 数据库该被认真做成产品",
+      "content": "演讲盘点现存 quorum 数据库后指出：Riak 实质已死、Voldemort 少人用，InfluxDB 与 Grafana Mimir 的早期 quorum 版本被重写，Cassandra 几乎是唯一明确在线的例子——业界缺的不是理论而是可抄的实现。leader-based 协议的痛点在 failover：重配置协议约每分钟出现一次延迟尖峰、Raft 选举约每五分钟一次，因此作者主张「可用性其实就是延迟 SLO」，leaderless 没有选举空窗、理应有更平滑的尾延迟。他用 CashDB 分账思想实验逐一检验 ABD、Megastore、EPaxos、QuePaxa、Accord，指出 EPaxos 高竞争下有延迟悬崖且尾延迟无上界；结论是 Accord 的时间戳稳定性加上 escrow 可交换约束，能让这类负载在 leaderless 下成立，Cloudflare 正把 QuePaxa 推向生产（Meerkat）。\n启示：复制协议选型别默认 Raft 是唯一解：先按业务语义（只需 register 读写，还是要多 key 事务）和尾延迟目标挑协议，并区分「协议能不能做」与「产品能不能长期维护」——没有选举空窗的 leaderless 方案值得重新评估。\n分类：观点 · 来源：transactional.blog · HPTS’26 演讲《Please Implement A Quorum Database》文字稿（2026-11-15），Charlie27 博客整理",
+      "tags": [
+        "每日情报",
+        "观点"
+      ],
+      "created": "2026-11-25"
+    },
+    {
+      "id": "kb-mwvg2sqw3br",
+      "source": "archboard-daily",
+      "title": "[情报·2026-11-25] GitHub Rubicon：Agent 时代把 Git 共识缩小到单个引用，单仓库扛住 7200 次推送/秒",
+      "content": "AI Agent 让最忙仓库的请求量 3 个月涨约 4 倍（日均 4400 万到 1.81 亿），写入从偶发突发变成持续速率，而每次 push 又会放大 CI、部署与其他 Agent 的读。GitHub 的新架构 Rubicon 遵循两条原则——最小化协调、存储计算分离：Git 对象不可变且按内容寻址，只有引用更新需要共识；对象放 Azure Blob Storage，引用与包清单放自研 Ref-CAS 复制日志（按单个引用做仲裁 CAS，可达数万 ops/s），压实与 GC 挪到独立后台节点按租约分片。他们先试过单 blob WAL（每秒仅几百次写）和分段 blob（读延迟被最慢分段拖累），才确定这套拆分；内部测试中单仓库支撑 5000 个并发 Agent、7200 次 push/s，且写入上升时延迟曲线保持平坦（均为内测数字，全面推广在次年）。\n启示：做分布式设计先划清「哪些状态真正需要排序」：把共识粒度从整仓库缩到单个引用，不可变数据交给对象存储、维护任务移出在线服务路径，读写与维护才能各自扩展——别为提升写吞吐而牺牲数量级更大的读路径。\n分类：实践 · 来源：GitHub 官方工程博客 · Karthik Raman / Brian Celenza《Inside GitHub’s new Git storage architecture》（2026-11-05）",
+      "tags": [
+        "每日情报",
+        "实践"
+      ],
+      "created": "2026-11-25"
+    },
     {
       "id": "kb-mwud3q962yn",
       "source": "archboard-daily",
