@@ -1,7 +1,29 @@
 {
   "schema": "archhub/knowledge/v1",
-  "updated": "2026-11-27",
+  "updated": "2026-11-28",
   "entries": [
+    {
+      "id": "kb-mwznrlmbwz",
+      "source": "archboard-daily",
+      "title": "[情报·2026-11-28] Meta RADAR 与 PyTorch GreenLight：AI 自动批准低风险代码，信任边界画在作者、来源与风险分位上",
+      "content": "Meta 的 RADAR 针对的是 AI 编码带来的评审产能危机：人均每次人肉落地的有效代码行同比涨 105.9%、每人每月 diff 涨 51%，八成以上归因于 agentic AI，而 24 小时内被评审的 diff 占比反而在下降。RADAR 不试图全面替代评审，而是先按作者与来源分流：确定性 codemod 走通用策略直接放行，AI 生成的 codemod 与 runbook 依次过安全硬规则、Diff Risk Score 与 LLM 评审，任一失败就转人工；硬规则把开源代码、SOX 管辖代码永久排除，runbook 要有 60 天零生产事故、低回滚低拒绝记录且每天不超过 2000 个 diff。风险分位做闸门：白名单 runbook 可放行到 50 分位、其他 AI 与机器人来源止于 20 分位、人工提交默认 5 分位，最后评审 Agent 还要给出至少 8/10 置信度且所有变更归入安全类别；获批 diff 并不立即落地，而是在类似 24 小时的队列里留给人工否决窗口。PyTorch 开源版 GreenLight 补了一条关键约束：只有文件本身已有审批权的维护者才拿到真实批准，其他人一律 shadow mode 只记录不生效，被回滚的 PR 永久出局。\n启示：让 AI 自动批准 AI 写的代码，前提不是模型更聪明，而是把信任拆成可验证的维度——作者是否有权、来源是否可信、风险落在哪个分位、置信度够不够，并留一个可人工否决的落地窗口；对有权限的人也要先影子运行、累积证据，再逐步放开自动审批，否则评审只是换了个更快的形式。\n分类：实践 · 来源：InfoQ ·《Meta Brings Code Review Auto-Approval More Mainstream with PyTorch GreenLight》（2026-11-27），源自 Meta 论文 arXiv:2605.30208 与 PyTorch devlog",
+      "tags": [
+        "每日情报",
+        "实践"
+      ],
+      "created": "2026-11-28"
+    },
+    {
+      "id": "kb-mwznrlmb7da",
+      "source": "archboard-daily",
+      "title": "[情报·2026-11-28] Netflix Quasar：用语义索引量化库 API 变更的爆炸半径，让编码 Agent 在开 PR 前就知道谁会崩",
+      "content": "Netflix 内部工具 Quasar 要回答共享库维护者的老问题——删改一个方法到底会打断谁。它用 SCIP 代码智能协议在 CI 构建时索引符号定义与引用，以 Parquet 存进 Amazon S3、用 Athena 查询；PR 分析时先比对两次提交的 API 定义找出增删改符号，再查索引定位受影响的仓库、依赖版本与具体调用点，案例中一次废弃方法删除波及 137 个仓库、横跨三个库版本。它不替代 Revapi 的兼容性检查与 Kythe 的代码导航，而是补上「谁真的在用」这一环，并通过 REST、GraphQL 和 MCP server 暴露给开发者与编码 Agent，下一步要把影响分析前移到写代码阶段、让 Agent 在开 PR 前就备好迁移改动。局限也很坦诚：反射、动态加载、索引过期与覆盖不全都会造成漏报，查不到引用不等于没人用，团队正补运行时分析。\n启示：共享库治理的盲区不是「改没改」，而是「谁真的在调用」——依赖图只反映声明关系、文本搜索漏掉继承与生成代码、全量编译下游又太贵；把符号级使用证据做成可查询的基础设施并开放给 Agent，能把兼容性判断从事后救火变成提交前决策，但要记住「查不到」不等于「没人用」，下线决策仍需运行时信号兜底。\n分类：工具 · 来源：InfoQ ·《Netflix Builds Quasar to Measure the Blast Radius of Library API Changes》（2026-11-27），源自 Netflix 工程博客",
+      "tags": [
+        "每日情报",
+        "工具"
+      ],
+      "created": "2026-11-28"
+    },
     {
       "id": "kb-mwyak8l17kt",
       "source": "archboard-daily",
